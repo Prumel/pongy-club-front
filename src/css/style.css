@@ -3,9 +3,20 @@
     src: url("src/font/robotofonts/Roboto-Regular.ttf");
   }
 
+
+@font-face {
+    font-family: robotoBold;
+    src: url("src/font/robotofonts/Roboto-Bold.ttf");
+  }
+
+@font-face {
+    font-family: robotoMedium;
+    src: url("src/font/robotofonts/Roboto-Medium.ttf");
+  }
+
   @font-face {
-      font-family: robotoMedium;
-      src: url("src/font/robotofonts/Roboto-Medium.ttf");
+      font-family: bebas;
+      src: url("src/font/bebasNeue/BebasNeue-Regular.ttf");
     }
 
 
@@ -14,5 +25,31 @@ body {
 }
 
 h1 {
+    font-family : bebas;
+}
+
+h2 {
+    font-family :robotoBold;
+}
+
+h3 {
     font-family : robotoMedium;
+}
+
+p {
+    font-family : robotoRegular;
+}
+
+.map-container iframe {
+position : absolute;
+top : 0;
+left : 0;
+width : 50%;
+height : 50%;
+}
+
+.map-container {
+    position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
 }
