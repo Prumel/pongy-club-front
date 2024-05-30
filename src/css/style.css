@@ -22,34 +22,39 @@
 
 body {
     font-family : robotoRegular;
+    color: #282828;
 }
 
 h1 {
     font-family : bebas;
+    color: #008B9E;
 }
 
 h2 {
     font-family :robotoBold;
+    color: #008B9E;
+
 }
 
 h3 {
-    font-family : robotoMedium;
+    font-family : robotoBold;
+    color: #282828;
+
+
 }
 
 p {
     font-family : robotoRegular;
 }
 
-.map-container iframe {
-position : absolute;
-top : 0;
-left : 0;
-width : 50%;
-height : 50%;
+footer {
+    color: black;
 }
 
-.map-container {
-    position: relative;
-      padding-bottom: 56.25%;
-      height: 0;
-}
+
+
+
+
+
+
+
