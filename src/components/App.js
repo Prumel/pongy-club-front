@@ -80,7 +80,7 @@ export default function App() {
                 <p> <a href="mailto:exemple@gmail.com" style={{color:"inherit"}}><i className="me-1 fa-solid fa-envelope" ></i></a> Email : <a href="mailto:exemple@gmail.com" style={{color:"inherit"}}>pongyclub@gmail.com</a></p>
                 <p><i className="me-1 fa-solid fa-phone"></i> Téléphone : 01 23 45 67 89</p>
                 <p><i className="me-1 fa-solid fa-map-marker"></i> Adresse : 9 rue du Fossé Mignard, 77700 Chessy</p>
-                <p><a href="https://www.facebook.com/FFTTofficiel" style={{textDecoration:"none"}} style={{color:"inherit"}}> <i className="me-1 fa-solid fa-brands fa-facebook-f"></i>Suivez-nous sur Facebook</a> </p>
+                <p><a href="https://www.facebook.com/FFTTofficiel" target="_blank" style={{textDecoration:"none"}} style={{color:"inherit"}}> <i className="me-1 fa-solid fa-brands fa-facebook-f"></i>Suivez-nous sur Facebook</a> </p>
             </div>
                  <div className="col-md-6 d-flex justify-content-center align-items-center p-3">
                     <iframe

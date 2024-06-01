@@ -23,6 +23,7 @@
 body {
     font-family : robotoRegular;
     color: #282828;
+     text-align: justify;
 }
 
 h1 {
