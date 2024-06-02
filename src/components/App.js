@@ -3,7 +3,7 @@ import { Container, Nav, Navbar } from 'react-bootstrap';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import { myContext } from '../index';
 
-import Welcome from './Welcome';
+import WelcomeController from './controller/WelcomeController';
 import ConnectionController from './controller/ConnectionController';
 import RegistrationController from './controller/RegistrationController';
 import AdminController from './controller/AdminController.js';
@@ -61,8 +61,8 @@ export default function App() {
             <article>
                 <Container>
                     <Routes>
-                        <Route path='/' element={<Welcome />} />
-                        <Route path='/welcome' element={<Welcome />} />
+                        <Route path='/' element={<WelcomeController />} />
+                        <Route path='/welcome' element={<WelcomeController />} />
                         <Route path='/connection' element={<ConnectionController />} />
                         <Route path='/register' element={<RegistrationController />} />
                         <Route path='/admin' element={<AdminController />} />

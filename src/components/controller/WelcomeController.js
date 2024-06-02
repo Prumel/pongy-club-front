@@ -1,23 +1,29 @@
-import React, {useContext, useEffect} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import WelcomeView from "../view/WelcomeView";
 
 export default function WelcomeController(props) {
 
-const backUrl = window.location.origin + "/api/rest/welcome";
+const backUrl = "http://localhost:8080/api/public/welcome";
+
+useEffect(() => {
+        fetchTrainings();
+    }, [])
+
+const [trainings, setTrainings] = useState([]);
 
     function fetchTrainings() {
-
-        const requestOption = {
+        console.log("fetchTrainings");
+        const requestOptions = {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
         };
 
-        fetch(backUrl, requestOption)
+        fetch(`${backUrl}/training`, requestOptions)
         .then(response => response.json())
-        .then(json => props.setTrainings(json));
+        .then(json => setTrainings(json));
     }
 
     return (
-        <WelcomeView fetchTrainings={() => fetchTrainings}/>
+        <WelcomeView fetchTrainings={() => fetchTrainings()} trainings={trainings}/>
     )
 }

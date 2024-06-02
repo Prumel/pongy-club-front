@@ -6,7 +6,7 @@ import logoIDF from 'public/logo-IDF.jpg';
 import {Row, Col, Card, InputGroup, Nav, Form, Container, ListGroup, Button} from "react-bootstrap";
 
 
-export default function Welcome(props) {
+export default function WelcomeView(props) {
 
     return (
         <Container>
@@ -35,28 +35,25 @@ export default function Welcome(props) {
             <hr />
 
             <section className="p-3">
+
+
                 <h3>Les entraînements</h3>
                 <Row className="pt-4 ps-3 pe-3">
                     <ListGroup>
-{
-//                        <Row className="pt-4 ps-3 pe-3"><ListGroup>
-
-//                            {props.cats.map(training => (
-//                                <ListGroup.Item key={training.id}>
-//                                    <Button className="w-100" variant="secondary">{training.name} : {training.schedule}</Button>
-//                                </ListGroup.Item>
-//                            ))}
-//
-//                        </ListGroup>
-}
-
-<p> coucou </p>
-<p> coucou </p>
-<p> coucou </p>
-
-                    </ListGroup>
+    {props.trainings.map((training, index) => (
+        <ListGroup.Item
+            key={training.id}
+            className="w-100"
+            style={{backgroundColor: index % 2 === 0 ? "#C5F8FF" : "#FFFFFF"}}
+        >
+            {training.name.replace(/^./, training.name[0].toUpperCase())} : {training.schedule}
+        </ListGroup.Item>
+    ))}
+</ListGroup>
                 </Row>
             </section>
+
+            <hr />
 
             <section className="p-3">
                 <h3>Découvrez nos partenaires</h3>
