@@ -4,10 +4,7 @@ import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import { myContext } from '../index';
 
 import WelcomeController from './controller/WelcomeController';
-import ConnectionController from './controller/ConnectionController';
 import RegistrationController from './controller/RegistrationController';
-import AdminController from './controller/AdminController.js';
-
 
 export default function App() {
 
@@ -39,14 +36,11 @@ export default function App() {
                             <Nav.Link as={Link} eventKey='1' to="/welcome">
                                 <i className='fa fa-home me-1'></i>Accueil
                             </Nav.Link>
-                            <Nav.Link as={Link} eventKey='2' to="/connection" hidden={member !== null}>
-                                <i className='fa fa-lock me-1'></i>
-                                Se connecter
+                            <Nav.Link as={Link} eventKey='2' to="/registration">
+                                <i className='fa-solid fa-pen-to-square me-1'></i>
+                                 S'inscrire au club
                             </Nav.Link>
-                            <Nav.Link as={Link} eventKey='3' to="/register" hidden={member !== null}>
-                                <i className='fas fa-user-plus me-1'></i>
-                                Créer un compte
-                            </Nav.Link>
+
                             <Nav.Link as={Link} eventKey='4' to="/welcome" hidden={member === null} onClick={() => {setMember(null);}}>
                                 <i className='fa fa-unlock me-1'></i>
                                 Déconnexion
@@ -63,9 +57,7 @@ export default function App() {
                     <Routes>
                         <Route path='/' element={<WelcomeController />} />
                         <Route path='/welcome' element={<WelcomeController />} />
-                        <Route path='/connection' element={<ConnectionController />} />
-                        <Route path='/register' element={<RegistrationController />} />
-                        <Route path='/admin' element={<AdminController />} />
+                        <Route path='/registration' element={<RegistrationController />} />
                     </Routes>
                 </Container>
             </article>

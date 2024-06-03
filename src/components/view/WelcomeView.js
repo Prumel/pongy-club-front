@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from 'react-router-dom';
 import tablesInGymnasium from 'public/tt-tables-in-gymnasium.png';
 import facebookBanner from 'public/facebook-banner.png';
 import logoEql from 'public/logo-eql.jpg';
@@ -20,13 +21,14 @@ export default function WelcomeView(props) {
                     </div>
                     <div className="col-md d-flex justify-content-center align-items-center p-3">
                         <p>
-                            Pongy Club est un club de tennis de table rattaché à la <a href="https://www.fftt.com/" target="_blank">
-                            FFTT</a> - Fédération Française de Tennis de Table et à la <a href="https://www.fnsmr.org/" target="_blank">
-                            FNSMR</a> - Fédération Nationale Sport en Milieu Rural.
+                            <strong>Pongy Club</strong> est un club de <strong>tennis de table</strong> rattaché à la
+                            <a href="https://www.fftt.com/" target="_blank"> FFTT</a> - Fédération Française de Tennis
+                            de Table et à la <a href="https://www.fnsmr.org/" target="_blank"> FNSMR</a> -
+                            Fédération Nationale Sport en Milieu Rural.
                             <br/>
                             <br/>
-                            Le club est ouvert à tous les publics, de 7 à 100 ans et plus, et propose des entraînements
-                            libres pour les adultes et des entraînements supervisés pour les enfants.
+                            Le club est ouvert à tous les publics, de 7 à 100 ans et plus, et accueille les joueurs
+                            de tous niveaux, du débutant au confirmé.
                         </p>
                     </div>
                  </div>
@@ -38,19 +40,26 @@ export default function WelcomeView(props) {
 
 
                 <h3>Les entraînements</h3>
-                <Row className="pt-4 ps-3 pe-3">
+
+                <p>Voici les entraînements proposés par le <strong>Pongy Club</strong> le mardi soir
+                tout au long de la saison sportive, hors vacances scolaires :</p>
+
+                <Row className="ps-3 pe-3">
                     <ListGroup>
-    {props.trainings.map((training, index) => (
-        <ListGroup.Item
-            key={training.id}
-            className="w-100"
-            style={{backgroundColor: index % 2 === 0 ? "#C5F8FF" : "#FFFFFF"}}
-        >
-            {training.name.replace(/^./, training.name[0].toUpperCase())} : {training.schedule}
-        </ListGroup.Item>
-    ))}
-</ListGroup>
+                        {props.trainings.map((training, index) => (
+                            <ListGroup.Item
+                                key={training.id}
+
+                                style={{backgroundColor: index % 2 === 0 ? "#C5F8FF" : "#FFFFFF"}}
+                            >
+                                {training.name.replace(/^./, training.name[0].toUpperCase())} : {training.schedule}
+                            </ListGroup.Item>
+                    ))}
+                </ListGroup>
                 </Row>
+
+                <p className="pt-3"> Pour y participer, <Link to="/registration">inscrivez-vous en ligne</Link>  ou rendez-vous directement au gymnase aux horaires
+                des entrainements.</p>
             </section>
 
             <hr />
@@ -58,13 +67,13 @@ export default function WelcomeView(props) {
             <section className="p-3">
                 <h3>Découvrez nos partenaires</h3>
                 <p>
-                    Le Pongy Club remercie infiniement ses partenaires, <a href="https://www.ecoleql.fr/">l'EQL
+                    Le <strong>Pongy Club</strong> remercie infiniement ses partenaires, <a href="https://www.ecoleql.fr/">l'EQL
                     </a> et <a href="https://www.iledefrance.fr/" target="_blank">la région Ile-de-France</a>, qui le soutiennent financièrement
                      afin de pouvoir mettre en place de beaux projets tout au long de l'année comme :
                      <ul>
-                        <li>l'organisation de tournois</li>
-                        <li>l'achat de matériel et de récompenses</li>
-                        <li>la participation aux compétitions</li>
+                        <li>l'organisation de tournois,</li>
+                        <li>l'achat de matériel et de récompenses,</li>
+                        <li>la participation aux compétitions,</li>
                         <li>et bien d'autres choses !</li>
                      </ul>
                      N'hésitez pas à visiter leur site internet pour en savoir plus sur leurs activités et pour les
@@ -84,9 +93,12 @@ export default function WelcomeView(props) {
 
             <section className="p-3">
             <h3>Restez à la page !</h3>
-                <a href="https://www.facebook.com/FFTTofficiel" target="_blank"><img src={facebookBanner} alt="Bannière suivez-nous sur facebook" width="25%"/></a>
+                <div  className="d-flex justify-content-center align-items-center">
+                    <a href="https://www.facebook.com/FFTTofficiel" target="_blank"><img src={facebookBanner} alt="Bannière suivez-nous sur facebook" /></a>
+                </div>
             </section>
 
+            <hr/>
         </Container>
     );
 }
