@@ -12,7 +12,6 @@ useEffect(() => {
 const [trainings, setTrainings] = useState([]);
 
     function fetchTrainings() {
-        console.log("fetchTrainings");
         const requestOptions = {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },

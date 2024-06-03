@@ -58,7 +58,7 @@ export default function WelcomeView(props) {
                 </ListGroup>
                 </Row>
 
-                <p className="pt-3"> Pour y participer, <Link to="/registration">inscrivez-vous en ligne</Link>  ou rendez-vous directement au gymnase aux horaires
+                <p className="pt-3"> Pour y participer, <Link to="/registration">commencer votre inscription en ligne</Link>  ou rendez-vous directement au gymnase aux horaires
                 des entrainements.</p>
             </section>
 
@@ -70,12 +70,14 @@ export default function WelcomeView(props) {
                     Le <strong>Pongy Club</strong> remercie infiniement ses partenaires, <a href="https://www.ecoleql.fr/">l'EQL
                     </a> et <a href="https://www.iledefrance.fr/" target="_blank">la région Ile-de-France</a>, qui le soutiennent financièrement
                      afin de pouvoir mettre en place de beaux projets tout au long de l'année comme :
-                     <ul>
-                        <li>l'organisation de tournois,</li>
-                        <li>l'achat de matériel et de récompenses,</li>
-                        <li>la participation aux compétitions,</li>
-                        <li>et bien d'autres choses !</li>
-                     </ul>
+                </p>
+                <ul>
+                    <li>l'organisation de tournois,</li>
+                    <li>l'achat de matériel et de récompenses,</li>
+                    <li>la participation aux compétitions,</li>
+                    <li>et bien d'autres choses !</li>
+                </ul>
+                <p>
                      N'hésitez pas à visiter leur site internet pour en savoir plus sur leurs activités et pour les
                      soutenir !
                 </p>

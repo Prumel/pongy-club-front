@@ -85,6 +85,12 @@ export default function App() {
                     </iframe>
                 </div>
             </div>
+
+            <hr/>
+
+            <div className="d-flex align-items-center justify-content-center">
+                <p> Merci à nos partenaires, EQL et la région Ile-de-France !</p>
+            </div>
         </Container>
 
       </footer>
