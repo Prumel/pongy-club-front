@@ -22,6 +22,8 @@ import {Row, Col, Card, InputGroup, Nav, ListGroup} from "react-bootstrap";
 
 export default function RegistrationView(props) {
   const [form, setForm] = useState(null);
+  const [fields, setFields] = useState({ firstName: "", lastName: "", birthdate:"", email:"", adress:"", city:"",zipCode:"" });
+
 
   function renderForm () {
     switch(form) {
@@ -39,17 +41,18 @@ export default function RegistrationView(props) {
             <Form.Group className="mb-3">
                 <Form.Label>Adresse mail</Form.Label>
                 <Form.Control
-    type="email"
-    placeholder="Adresse mail"
-    required
-    pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
-    onChange={(e) => {
-        e.target.reportValidity();
-    }}
-/>
-<Form.Control.Feedback type="invalid">
-    Veuillez entrer une adresse mail valide.
-</Form.Control.Feedback>
+                    type="email"
+                    placeholder="Adresse mail"
+                    required
+                    pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                    onChange={(e) => {
+                        e.target.reportValidity();
+
+                    }}
+                />
+                <Form.Control.Feedback type="invalid">
+                    Veuillez entrer une adresse mail valide.
+                </Form.Control.Feedback>
             </Form.Group>
             <Form.Group className="mb-3">
                 <Form.Label>Numéro de téléphone</Form.Label>
@@ -57,15 +60,19 @@ export default function RegistrationView(props) {
             </Form.Group>
             <Form.Group className="mb-3">
                 <Form.Label>Date de naissance</Form.Label>
-                <Form.Control type="date" placeholder="Date de naissance" required onChange={props.handleDateChange}/>
+                <Form.Control
+                    type="date"
+                    placeholder="Date de naissance"
+                    required
+                    onChange={(e) => {
+                        props.handleDateChange(e);
+                        setFields({...fields, birthdate: e.target.value});
+                    }}
+                />
             </Form.Group>
             <Form.Group className="mb-3">
                 <Form.Label>Numéro de voie</Form.Label>
-                <Form.Control type="text" placeholder="Numéro de voie" required/>
-            </Form.Group>
-            <Form.Group className="mb-3">
-                <Form.Label>Libellé de voie</Form.Label>
-                <Form.Control type="text" placeholder="Libellé de voie" required/>
+                <Form.Control type="text" placeholder="Numéro et libellé de voie" required/>
             </Form.Group>
             <Form.Group className="mb-3">
                 <Form.Label>Code postal</Form.Label>
