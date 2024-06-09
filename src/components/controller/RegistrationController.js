@@ -30,12 +30,14 @@ export default function RegistrationController(props) {
         }
 
         function handlePostalCodeChange(e) {
-            fetchCities(e.target.value)
-                .then(fetchedCities => {
-                    setCities(fetchedCities);
-                    setSelectedCity(fetchedCities[0] || '');
-                });
-        }
+    fetchCities(e.target.value)
+        .then(fetchedCities => {
+            setCities(fetchedCities);
+            if (fetchedCities.length > 0) {
+                setSelectedCity(fetchedCities[0]);
+            }
+        });
+}
 
     return (
         <RegistrationView
@@ -45,21 +47,30 @@ export default function RegistrationController(props) {
             selectedCity={selectedCity}
             setSelectedCity={setSelectedCity}
             isMinor={isMinor}
+            registerAdultLicensedMember={registerAdultLicensedMember}
         />
     );
 }
-const backUrl = "http://localhost:8080/api/public/";
+const backUrl = "http://localhost:8080/api/public/register";
 
-//    function registerLicensedMember(firstName, lastName, email, phoneNumber, address) {
-//        const licensedMember = {name: name, firstname: firstname, email: email, password: password, phone: phone, address: address, city: city, postalCode: postalCode};
-//        const requestOptions = {
-//            method: "POST",
-//            headers: {"Content-Type": "application/json"},
-//            body: JSON.stringify(licensedMember)
-//        }
-//        fetch(`${backUrl}/licensedMember`, requestOptions)
-//            .then(response => response.json())
-//            .then(json => console.log(json));
-//    }
-
+function registerAdultLicensedMember(firstName, lastName, email, phoneNumber, birthdate, address, selectedCity, zipCode) {
+    const licensedMember = {
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        phoneNumber: phoneNumber,
+        birthdate: birthdate,
+        address: address,
+        city: selectedCity, // use selectedCity from parameters
+        zipCode: zipCode
+    };
+    const requestOptions = {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(licensedMember)
+    }
+    fetch(`${backUrl}/adult`, requestOptions)
+        .then(response => response.json())
+        .then(json => console.log(json));
+}
 
