@@ -33,17 +33,12 @@ export default function WelcomeView(props) {
                     </div>
                  </div>
             </section>
-
             <hr />
 
             <section className="p-3">
-
-
                 <h3>Les entraînements</h3>
-
                 <p>Voici les entraînements proposés par le <strong>Pongy Club</strong> le mardi soir
                 tout au long de la saison sportive, hors vacances scolaires :</p>
-
                 <Row className="ps-3 pe-3">
                     <ListGroup>
                         {props.trainings.map((training, index) => (
@@ -57,12 +52,18 @@ export default function WelcomeView(props) {
                     ))}
                 </ListGroup>
                 </Row>
-
-                <p className="pt-3"> Pour y participer, <Link to="/registration">commencer votre inscription en ligne</Link>  ou rendez-vous directement au gymnase aux horaires
-                des entrainements.</p>
             </section>
 
             <hr />
+
+             <section className="p-3">
+                <h3>Nous rejoindre</h3>
+                <p>
+                    Vous souhaitez nous rejoindre ? C'est très simple ! Il vous suffit de vous inscrire en ligne
+                    en cliquant sur le bouton ci-dessous :
+                </p>
+
+             <hr />
 
             <section className="p-3">
                 <h3>Découvrez nos partenaires</h3>

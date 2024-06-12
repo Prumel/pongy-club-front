@@ -7,13 +7,27 @@ export default function RegistrationView(props) {
   const [form, setForm] = useState(null);
   const [fields, setFields] = useState({ firstName: "", lastName: "", birthdate:"", email:"", phoneNumber :"",
    adress:"", selectedCity:"",zipCode:"" });
+   const currentMonth = new Date().getMonth();
 
 
-  function renderForm () {
+ function renderForm () {
+    if (props.registrationSuccess) {
+      return <Alert variant="success">
+        Vos informations ont bien été envoyées. Afin de finaliser votre inscription, veuillez vous rendre au gymnase
+        avec le formulaire dûment complété et le réglement.
+      </Alert>;
+    }
+     if (currentMonth >= 6 && currentMonth <= 7) {
+          return <Alert variant="warning">Les inscriptions sont fermées du mois de juillet au mois d'août. Revenez en septembre ! </Alert>;
+     }
     switch(form) {
       case 'club':
         return (
-          <Form>
+            <Form onSubmit={(e) => {
+                e.preventDefault();
+                props.registerAdultLicensedMember(fields.firstName, fields.lastName, fields.email, fields.phoneNumber, fields.birthdate, fields.adress, fields.selectedCity, fields.zipCode);
+            }}>
+
             <Form.Group className="mb-3">
                 <Form.Label>Nom</Form.Label>
                 <Form.Control type="text" placeholder="Nom" required value={fields.lastName}
@@ -82,15 +96,6 @@ export default function RegistrationView(props) {
                 }}/>
             </Form.Group>
 
-{//            <Form.Group className="mb-3">
- //                <Form.Label>Ville</Form.Label>
- //                <Form.Select required value={props.selectedCity} onChange={(e) => props.setSelectedCity(e.target.value)}>
- //                    {props.cities.map((city, index) => (
- //                        <option key={index} value={city}>{city}</option>
- //                    ))}
- //                </Form.Select>
- //            </Form.Group>
- }
 
 <Form.Group className="mb-3">
     <Form.Label>Ville</Form.Label>
@@ -101,8 +106,9 @@ export default function RegistrationView(props) {
     </Form.Select>
 </Form.Group>
 
-<Button variant="primary" type="submit" onClick={() => props.registerAdultLicensedMember(fields.firstName, fields.lastName, fields.email, fields.phoneNumber, fields.birthdate, fields.adress, fields.selectedCity, fields.zipCode)}>
-    S'inscrire
+<Button variant="primary" type="submit">
+{//onClick={() => props.registerAdultLicensedMember(fields.firstName, fields.lastName, fields.email, fields.phoneNumber, fields.birthdate, fields.adress, fields.selectedCity, fields.zipCode)}
+    }S'inscrire
 </Button>
 
           </Form>
@@ -119,19 +125,43 @@ export default function RegistrationView(props) {
     }
   };
 
-      return (
-      <>
-        <Container>
-          <h2 className="my-3 d-flex justify-content-center align-items-center">S'inscrire au Pongy Club</h2>
-          <div className="d-flex justify-content-center align-items-center p-3">
-              <Button onClick={() => setForm('club')}>S'inscrire au club</Button>
-          </div> <div className="d-flex justify-content-center align-items-center p-3">
-              <Button onClick={() => setForm('child')}>Inscrire son enfant au club</Button>
-          </div>
-          {props.isMinor && <Alert variant="warning">Si vous êtes mineur, veuillez remplir l'autre
-          formulaire avec votre responsable légal.</Alert>}
-          {renderForm()}
-        </Container>
-        </>
-      );
-    }
+//      return (
+//      <>
+//        <Container>
+//          <h2 className="my-3 d-flex justify-content-center align-items-center">S'inscrire au Pongy Club</h2>
+//          <div className="d-flex justify-content-center align-items-center p-3">
+//              <Button onClick={() => setForm('club')}>S'inscrire au club</Button>
+//          </div> <div className="d-flex justify-content-center align-items-center p-3">
+//              <Button onClick={() => setForm('child')}>Inscrire son enfant au club</Button>
+//          </div>
+//          {props.isMinor && <Alert variant="warning">Si vous êtes mineur, veuillez remplir l'autre
+//          formulaire avec votre responsable légal.</Alert>}
+//          {renderForm()}
+//        </Container>
+//        </>
+//      );
+//    }
+//
+
+  return (
+    <>
+      <Container>
+        <h2 className="my-3 d-flex justify-content-center align-items-center">S'inscrire au Pongy Club</h2>
+        {/* Only show the form selection buttons if registration was not successful */}
+         {!props.registrationSuccess && !(currentMonth >= 4 && currentMonth <= 7) && (
+          <>
+            <div className="d-flex justify-content-center align-items-center p-3">
+                <Button onClick={() => setForm('club')}>S'inscrire au club</Button>
+            </div>
+            <div className="d-flex justify-content-center align-items-center p-3">
+                <Button onClick={() => setForm('child')}>Inscrire son enfant au club</Button>
+            </div>
+          </>
+        )}
+        {props.isMinor && <Alert variant="warning">Si vous êtes mineur, veuillez remplir l'autre
+        formulaire avec votre responsable légal.</Alert>}
+        {renderForm()}
+      </Container>
+    </>
+  );
+}
