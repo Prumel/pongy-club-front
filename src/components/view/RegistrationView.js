@@ -1,62 +1,72 @@
-
 import React, { useState } from 'react';
 import { Button, Alert, Container, Form } from 'react-bootstrap';
 import {Row, Col, Card, InputGroup, Nav, ListGroup} from "react-bootstrap";
 
 export default function RegistrationView(props) {
-  const [form, setForm] = useState(null);
-  const [fields, setFields] = useState({ firstName: "", lastName: "", birthdate:"", email:"", phoneNumber :"",
-   adress:"", selectedCity:"",zipCode:"" });
-   const currentMonth = new Date().getMonth();
+
+    const [form, setForm] = useState(null);
+    const [fields, setFields] = useState({ firstName: "", lastName: "", birthdate:"", email:"", phoneNumber :"",
+        adress:"", selectedCity:"",zipCode:"" });
+    const currentMonth = new Date().getMonth();
 
 
- function renderForm () {
-    if (props.registrationSuccess) {
-      return <Alert variant="success">
-        Vos informations ont bien été envoyées. Afin de finaliser votre inscription, veuillez vous rendre au gymnase
-        avec le formulaire dûment complété et le réglement.
-      </Alert>;
-    }
-     if (currentMonth >= 6 && currentMonth <= 7) {
-          return <Alert variant="warning">Les inscriptions sont fermées du mois de juillet au mois d'août. Revenez en septembre ! </Alert>;
-     }
-    switch(form) {
-      case 'club':
+    function renderForm () {
+        if (props.registrationSuccess) {
+              return <Alert variant="success">
+                Votre compte a bien été créé. Vous pouvez maintenant vous connecter.
+                    <Button href="/connection" variant="primary" className="ms-2">Se connecter</Button>
+              </Alert>;
+            }
+
         return (
-            <Form onSubmit={(e) => {
-                e.preventDefault();
-                props.registerAdultLicensedMember(fields.firstName, fields.lastName, fields.email, fields.phoneNumber, fields.birthdate, fields.adress, fields.selectedCity, fields.zipCode);
-            }}>
+        <Form onSubmit={(e) => {
+            e.preventDefault();
+            props.registerAdultLicensedMember(fields.firstName, fields.lastName, fields.email, fields.phoneNumber, fields.birthdate, fields.adress, fields.selectedCity, fields.zipCode);
+        }}>
 
-            <Form.Group className="mb-3">
-                <Form.Label>Nom</Form.Label>
-                <Form.Control type="text" placeholder="Nom" required value={fields.lastName}
-                onChange={form => setFields({...fields, lastName: form.target.value})}/>
-            </Form.Group>
+                <Form.Group className="mb-3">
+                    <Form.Label>Nom</Form.Label>
+                    <Form.Control type="text" placeholder="Nom" required value={fields.lastName}
+                    onChange={form => setFields({...fields, lastName: form.target.value})}/>
+                </Form.Group>
 
             <Form.Group className="mb-3">
                 <Form.Label>Prénom</Form.Label>
                 <Form.Control type="text" placeholder="Prénom" required value={fields.firstName}
-                onChange={form => setFields({...fields, firstName: form.target.value})}/>
+                    onChange={form => setFields({...fields, firstName: form.target.value})}/>
             </Form.Group>
 
             <Form.Group className="mb-3">
-    <Form.Label>Adresse mail</Form.Label>
-    <Form.Control
-        type="email"
-        placeholder="Adresse mail"
-        required
-        pattern="[a-z0-9._%+\\-]+@[a-z0-9.-]+\\.[a-z]{2,}$"
-        value={fields.email}
-        onChange={(e) => {
-            e.target.reportValidity();
-            setFields({...fields, email: e.target.value});
-        }}
-    />
-    <Form.Control.Feedback type="invalid">
-        Veuillez entrer une adresse mail valide.
-    </Form.Control.Feedback>
-</Form.Group>
+                <Form.Label>Adresse mail</Form.Label>
+                <Form.Control
+                    type="email"
+                    placeholder="Adresse mail"
+                    required
+                    pattern="[a-z0-9._%+\\-]+@[a-z0-9.-]+\\.[a-z]{2,}$"
+                    value={fields.email}
+                    onChange={(e) => {
+                        e.target.reportValidity();
+                        setFields({...fields, email: e.target.value});
+                    }} />
+                <Form.Control.Feedback type="invalid">
+                    Veuillez entrer une adresse mail valide.
+                </Form.Control.Feedback>
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+                <Form.Label>Mot de passe></Form.Label>
+                <Form.Control
+                    type="password"
+                    placeholder="Mot de passe"
+                    required
+                    pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                    title="Doit contenir au moins un chiffre, une lettre majuscule, une lettre minuscule et au moins 8 caractères"
+                    value={fields.password}
+                    onChange={e => setFields({...fields, password: e.target.value})} />
+                <Form.Control.Feedback type="invalid">
+                    Doit contenir au moins un chiffre, une lettre majuscule, une lettre minuscule et au moins 8 caractères.
+                </Form.Control.Feedback>
+            </Form.Group>
 
             <Form.Group className="mb-3">
                 <Form.Label>Numéro de téléphone</Form.Label>
@@ -67,7 +77,7 @@ export default function RegistrationView(props) {
 
             <Form.Group className="mb-3">
                 <Form.Label>Date de naissance</Form.Label>
-                <Form.Control
+                 <Form.Control
                     type="date"
                     placeholder="Date de naissance"
                     required
@@ -77,13 +87,13 @@ export default function RegistrationView(props) {
                         setFields({...fields, birthdate: e.target.value});
 
                     }}
-                />
+                 />
             </Form.Group>
 
             <Form.Group className="mb-3">
                 <Form.Label>Numéro de voie</Form.Label>
                 <Form.Control type="text" placeholder="Numéro et libellé de voie" required value={fields.adress}
-                onChange={e => setFields({...fields, adress: e.target.value})}/>
+                    onChange={e => setFields({...fields, adress: e.target.value})}/>
             </Form.Group>
 
             <Form.Group className="mb-3">
@@ -97,71 +107,30 @@ export default function RegistrationView(props) {
             </Form.Group>
 
 
-<Form.Group className="mb-3">
-    <Form.Label>Ville</Form.Label>
-    <Form.Select required value={fields.selectedCity} onChange={e => setFields({...fields, selectedCity: e.target.value})}>
-        {props.cities.map((city, index) => (
-            <option key={index} value={city}>{city}</option>
-        ))}
-    </Form.Select>
-</Form.Group>
+            <Form.Group className="mb-3">
+                <Form.Label>Ville</Form.Label>
+                <Form.Select required value={fields.selectedCity} onChange={e => setFields({...fields, selectedCity: e.target.value})}>
+                    {props.cities.map((city, index) => (
+                        <option key={index} value={city}>{city}</option>
+                    ))}
+                </Form.Select>
+            </Form.Group>
 
-<Button variant="primary" type="submit">
-{//onClick={() => props.registerAdultLicensedMember(fields.firstName, fields.lastName, fields.email, fields.phoneNumber, fields.birthdate, fields.adress, fields.selectedCity, fields.zipCode)}
-    }S'inscrire
-</Button>
+            <Button variant="primary" type="submit">
+                Valider mes informations
+            </Button>
 
-          </Form>
-        );
-      case 'child':
-        return (
-          <Form>
-            {/* Child registration form goes here */}
-
-          </Form>
-        );
-      default:
-        return null;
+        </Form>
     }
-  };
 
-//      return (
-//      <>
-//        <Container>
-//          <h2 className="my-3 d-flex justify-content-center align-items-center">S'inscrire au Pongy Club</h2>
-//          <div className="d-flex justify-content-center align-items-center p-3">
-//              <Button onClick={() => setForm('club')}>S'inscrire au club</Button>
-//          </div> <div className="d-flex justify-content-center align-items-center p-3">
-//              <Button onClick={() => setForm('child')}>Inscrire son enfant au club</Button>
-//          </div>
-//          {props.isMinor && <Alert variant="warning">Si vous êtes mineur, veuillez remplir l'autre
-//          formulaire avec votre responsable légal.</Alert>}
-//          {renderForm()}
-//        </Container>
-//        </>
-//      );
-//    }
-//
+    return (
+          <Container>
+            <h2 className="my-3 d-flex justify-content-center align-items-center">Créer un compte</h2>
+             {!props.registrationSuccess && !(currentMonth >= 4 && currentMonth <= 7) && (
+            {renderForm()}
+            )}
+          </Container>
+      );
+    }
 
-  return (
-    <>
-      <Container>
-        <h2 className="my-3 d-flex justify-content-center align-items-center">S'inscrire au Pongy Club</h2>
-        {/* Only show the form selection buttons if registration was not successful */}
-         {!props.registrationSuccess && !(currentMonth >= 4 && currentMonth <= 7) && (
-          <>
-            <div className="d-flex justify-content-center align-items-center p-3">
-                <Button onClick={() => setForm('club')}>S'inscrire au club</Button>
-            </div>
-            <div className="d-flex justify-content-center align-items-center p-3">
-                <Button onClick={() => setForm('child')}>Inscrire son enfant au club</Button>
-            </div>
-          </>
-        )}
-        {props.isMinor && <Alert variant="warning">Si vous êtes mineur, veuillez remplir l'autre
-        formulaire avec votre responsable légal.</Alert>}
-        {renderForm()}
-      </Container>
-    </>
-  );
-}
+

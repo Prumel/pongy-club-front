@@ -36,11 +36,11 @@ export default function App() {
                             <Nav.Link as={Link} eventKey='1' to="/welcome">
                                 <i className='fa fa-home me-1'></i>Accueil
                             </Nav.Link>
-                            <Nav.Link as={Link} eventKey='2' to="/registration">
+                            <Nav.Link as={Link} eventKey='2' to="/registration" hidden={member != null}>
                                 <i className='fa-solid fa-pen-to-square me-1'></i>
-                                 S'inscrire au club
+                                 Créer un compte
                             </Nav.Link>
-
+                            <Nav.Link as={Link} eventKey='3' to="/connection" hidden={member != null}>
                             <Nav.Link as={Link} eventKey='4' to="/welcome" hidden={member === null} onClick={() => {setMember(null);}}>
                                 <i className='fa fa-unlock me-1'></i>
                                 Déconnexion
@@ -58,6 +58,7 @@ export default function App() {
                         <Route path='/' element={<WelcomeController />} />
                         <Route path='/welcome' element={<WelcomeController />} />
                         <Route path='/registration' element={<RegistrationController />} />
+                        <Route path='/connection' element={<ConnectionController />} />
                     </Routes>
                 </Container>
             </article>
