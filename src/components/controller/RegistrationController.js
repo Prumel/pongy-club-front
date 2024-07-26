@@ -18,31 +18,32 @@ export default function RegistrationController(props) {
         setIsMinor(age < 18);
     }
 
-        function fetchCities(postalCode) {
-            return axios.get(`https://api-adresse.data.gouv.fr/search/?q=${postalCode}&limit=5`)
-                .then(response => {
-                    if (response.data && response.data.features) {
-                        return response.data.features.map(feature => feature.properties.city);
-                    }
-                    return [];
-                })
-                .catch(error => {
-                    console.error(error);
-                    return [];
-                });
+    function fetchCities(postalCode) {
+        return axios.get(`https://api-adresse.data.gouv.fr/search/?q=${postalCode}&limit=5`)
+            .then(response => {
+                if (response.data && response.data.features) {
+                    return response.data.features.map(feature => feature.properties.city);
+                }
+                return [];
+            })
+            .catch(error => {
+                console.error(error);
+            return [];
+            });
         }
 
     function handlePostalCodeChange(e) {
-    fetchCities(e.target.value)
-        .then(fetchedCities => {
-            setCities(fetchedCities);
-            if (fetchedCities.length > 0) {
-                setSelectedCity(fetchedCities[0]);
-            }
-        });
-}
+        fetchCities(e.target.value)
+            .then(fetchedCities => {
+                setCities(fetchedCities);
+                if (fetchedCities.length > 0) {
+                    setSelectedCity(fetchedCities[0]);
+                }
+            });
+    }
 
-    function registerAdultLicensedMember(firstName, lastName, email, phoneNumber, birthdate, address, selectedCity, zipCode) {
+    function registerAdultLicensedMember(firstName, lastName, email, phoneNumber, birthdate, address,
+        selectedCity, zipCode) {
         const licensedMember = {
             firstName: firstName,
             lastName: lastName,
@@ -50,7 +51,7 @@ export default function RegistrationController(props) {
             phoneNumber: phoneNumber,
             birthdate: birthdate,
             address: address,
-            city: selectedCity, // use selectedCity from parameters
+            city: selectedCity,
             zipCode: zipCode
                 };
         const requestOptions = {
@@ -61,7 +62,7 @@ export default function RegistrationController(props) {
         fetch(`${backUrl}/adult`, requestOptions)
             .then(response => {
                 if (response.ok) {
-                    setRegistrationSuccess(true); // Set registrationSuccess to true here
+                    setRegistrationSuccess(true);
                 }
                 return response.json();
             })

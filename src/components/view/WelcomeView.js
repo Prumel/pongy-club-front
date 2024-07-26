@@ -4,7 +4,7 @@ import tablesInGymnasium from 'public/tt-tables-in-gymnasium.png';
 import facebookBanner from 'public/facebook-banner.png';
 import logoEql from 'public/logo-eql.jpg';
 import logoIDF from 'public/logo-IDF.jpg';
-import {Row, Col, Card, InputGroup, Nav, Form, Container, ListGroup, Button} from "react-bootstrap";
+import {Row, Container, ListGroup} from "react-bootstrap";
 
 
 export default function WelcomeView(props) {
@@ -44,7 +44,6 @@ export default function WelcomeView(props) {
                         {props.trainings.map((training, index) => (
                             <ListGroup.Item
                                 key={training.id}
-
                                 style={{backgroundColor: index % 2 === 0 ? "#C5F8FF" : "#FFFFFF"}}
                             >
                                 {training.name.replace(/^./, training.name[0].toUpperCase())} : {training.schedule}
