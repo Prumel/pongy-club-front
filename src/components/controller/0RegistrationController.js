@@ -1,5 +1,5 @@
 import RegistrationView from "../view/RegistrationView";
-import React, { useState } from "react";
+import React, {useContext, useEffect, useState} from "react";
 import axios from 'axios';
 
 export default function RegistrationController(props) {
@@ -28,9 +28,9 @@ export default function RegistrationController(props) {
             })
             .catch(error => {
                 console.error(error);
-                return [];
+            return [];
             });
-    }
+        }
 
     function handlePostalCodeChange(e) {
         fetchCities(e.target.value)
@@ -42,39 +42,30 @@ export default function RegistrationController(props) {
             });
     }
 
-    function registerAdultLicensedMember(guardianName, firstName, lastName, username, password, phoneNumber, birthdate, address, selectedCity, zipCode, isChild, registrationDate, licenses) {
+    function registerAdultLicensedMember(firstName, lastName, email, phoneNumber, birthdate, address,
+        selectedCity, zipCode) {
         const licensedMember = {
-            guardianName: guardianName,
             firstName: firstName,
             lastName: lastName,
-            username: username,
-            password: password,
+            email: email,
             phoneNumber: phoneNumber,
             birthdate: birthdate,
             address: address,
             city: selectedCity,
-            zipCode: zipCode,
-            isChild: isChild,
-            registrationDate: registrationDate,
-            licenses: licenses
-        };
+            zipCode: zipCode
+                };
         const requestOptions = {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: {"Content-Type": "application/json"},
             body: JSON.stringify(licensedMember)
-        };
+        }
         fetch(`${backUrl}/adult`, requestOptions)
             .then(response => {
                 if (response.ok) {
                     setRegistrationSuccess(true);
-                } else {
-                    throw new Error('Failed to register');
                 }
                 return response.json();
             })
-            .catch(error => {
-                console.error('Error:', error);
-            });
     }
 
     return (
@@ -90,3 +81,4 @@ export default function RegistrationController(props) {
         />
     );
 }
+
