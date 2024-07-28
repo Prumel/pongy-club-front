@@ -1,6 +1,6 @@
 import RegistrationView from "../view/RegistrationView";
-import React, { useState } from "react";
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+
 
 export default function RegistrationController(props) {
     const [cities, setCities] = useState([]);
@@ -8,8 +8,13 @@ export default function RegistrationController(props) {
     const [birthDate, setBirthDate] = useState(null);
     const [isMinor, setIsMinor] = useState(false);
     const [registrationSuccess, setRegistrationSuccess] = useState(false);
+    const [licenseTypes, setLicenseTypes] = useState([]);
 
-    const backUrl = "http://localhost:8080/api/public/register/register";
+    useEffect(() => {
+        fetchLicenseTypes();
+    }, []);
+
+    const backUrl = "http://localhost:8080/api/public/register";
 
     function handleDateChange(e) {
         const birthDate = new Date(e.target.value);
@@ -18,19 +23,32 @@ export default function RegistrationController(props) {
         setIsMinor(age < 18);
     }
 
-    function fetchCities(postalCode) {
-        return axios.get(`https://api-adresse.data.gouv.fr/search/?q=${postalCode}&limit=5`)
-            .then(response => {
-                if (response.data && response.data.features) {
-                    return response.data.features.map(feature => feature.properties.city);
-                }
-                return [];
-            })
-            .catch(error => {
-                console.error(error);
-                return [];
-            });
-    }
+  function fetchCities(postalCode) {
+    return fetch(`https://api-adresse.data.gouv.fr/search/?q=${postalCode}&limit=5`)
+        .then(response => response.json())
+        .then(data => {
+            if (data && data.features) {
+                return data.features.map(feature => feature.properties.city);
+            }
+            return [];
+        })
+        .catch(error => {
+            console.error(error);
+            return [];
+        });
+}
+//        return axios.get(`https://api-adresse.data.gouv.fr/search/?q=${postalCode}&limit=5`)
+//            .then(response => {
+//                if (response.data && response.data.features) {
+//                    return response.data.features.map(feature => feature.properties.city);
+//                }
+//                return [];
+//            })
+//            .catch(error => {
+//                console.error(error);
+//                return [];
+//            });
+//    }
 
     function handlePostalCodeChange(e) {
         fetchCities(e.target.value)
@@ -55,7 +73,7 @@ export default function RegistrationController(props) {
             city: selectedCity,
             zipCode: zipCode,
             isChild: isChild,
-            registrationDate: registrationDate,
+            registrationDate: new Date().toISOString(),
             licenses: licenses
         };
         const requestOptions = {
@@ -63,20 +81,30 @@ export default function RegistrationController(props) {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(licensedMember)
         };
-        fetch(`${backUrl}/adult`, requestOptions)
+        fetch(`${backUrl}/register`, requestOptions)
             .then(response => {
                 if (response.ok) {
                     setRegistrationSuccess(true);
+                    return response.json();
                 } else {
                     throw new Error('Failed to register');
                 }
-                return response.json();
+
             })
             .catch(error => {
                 console.error('Error:', error);
             });
     }
-
+       function fetchLicenseTypes() {
+            const requestOptions = {
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json' },
+            };
+            fetch(`${backUrl}/license-type`, requestOptions)
+                .then(response => response.json())
+                .then(json => setLicenseTypes(json));
+                {console.log(licenseTypes)}
+       }
     return (
         <RegistrationView
             handlePostalCodeChange={handlePostalCodeChange}
@@ -87,6 +115,7 @@ export default function RegistrationController(props) {
             isMinor={isMinor}
             registerAdultLicensedMember={registerAdultLicensedMember}
             registrationSuccess={registrationSuccess}
+             fetchLicenseTypes={() => fetchLicenseTypes()} licenseTypes={licenseTypes}
         />
     );
 }

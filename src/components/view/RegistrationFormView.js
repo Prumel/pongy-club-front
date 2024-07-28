@@ -1,12 +1,21 @@
 import React, { useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
 
-export default function ClubRegistrationForm({ fields, setFields, registerAdultLicensedMember, handleDateChange, handlePostalCodeChange, cities }) {
+export default function RegistrationFormView({ fields, setFields, registerAdultLicensedMember, handleDateChange, handlePostalCodeChange, cities, licenseTypes }) {
+const formType = fields.isChild ? 'child' : 'adult';
+
+  const handleLicenseChange = (e, licenseId) => {
+    const selectedLicenses = fields.licenses.includes(licenseId)
+      ? fields.licenses.filter(id => id !== licenseId)
+      : [...fields.licenses, licenseId];
+    setFields({ ...fields, licenses: selectedLicenses });
+  };
+
   return (
     <Form onSubmit={(e) => {
       e.preventDefault();
       registerAdultLicensedMember(
-        fields.guardianName,
+        fields.isChild ? fields.guardianName : null,
         fields.firstName,
         fields.lastName,
         fields.username,
@@ -17,33 +26,33 @@ export default function ClubRegistrationForm({ fields, setFields, registerAdultL
         fields.selectedCity,
         fields.zipCode,
         fields.isChild,
-        fields.registrationDate,
+//        fields.registrationDate,
         fields.licenses
       );
     }}>
       <Form.Group className="mb-3">
-        <Form.Label>Nom</Form.Label>
-        <Form.Control type="text" placeholder="Nom" required value={fields.lastName}
+        <Form.Label>{formType==='child'?'Nom de votre enfant':'Nom'}</Form.Label>
+        <Form.Control type="text"
+        placeholder={formType==='child'?'Nom de votre enfant':'Nom'}
+        required value={fields.lastName}
           onChange={form => setFields({ ...fields, lastName: form.target.value })} />
       </Form.Group>
 
       <Form.Group className="mb-3">
-        <Form.Label>Prénom</Form.Label>
-        <Form.Control type="text" placeholder="Prénom" required value={fields.firstName}
-          onChange={form => setFields({ ...fields, firstName: form.target.value })} />
+        <Form.Label>{formType==='child'?'Prénom de votre enfant':'Prénom'}</Form.Label>
+        <Form.Control type="text"
+            placeholder={formType==='child'?'Prénom de votre enfant':'Prénom'}
+            required value={fields.firstName}
+            onChange={form => setFields({ ...fields, firstName: form.target.value })} />
       </Form.Group>
 
-      <Form.Group className="mb-3">
-        <Form.Label>Nom du tuteur</Form.Label>
-        <Form.Control type="text" placeholder="Nom du tuteur" value={fields.guardianName}
-          onChange={form => setFields({ ...fields, guardianName: form.target.value })} />
-      </Form.Group>
-
-      <Form.Group className="mb-3">
-        <Form.Label>Nom d'utilisateur</Form.Label>
-        <Form.Control type="text" placeholder="Nom d'utilisateur" required value={fields.username}
-          onChange={form => setFields({ ...fields, username: form.target.value })} />
-      </Form.Group>
+   {fields.isChild && (
+           <Form.Group className="mb-3">
+             <Form.Label>Votre nom et prénom</Form.Label>
+             <Form.Control type="text" placeholder="Votre nom et prénom" value={fields.guardianName}
+               onChange={form => setFields({ ...fields, guardianName: form.target.value })} />
+           </Form.Group>
+         )}
 
       <Form.Group className="mb-3">
         <Form.Label>Mot de passe</Form.Label>
@@ -52,16 +61,16 @@ export default function ClubRegistrationForm({ fields, setFields, registerAdultL
       </Form.Group>
 
       <Form.Group className="mb-3">
-        <Form.Label>Adresse mail</Form.Label>
-        <Form.Control
+          <Form.Label>{formType==='child'?'Votre adresse mail ':'Adresse mail'} </Form.Label>
+          <Form.Control
           type="email"
-          placeholder="Adresse mail"
+          placeholder={formType==='child'?'Votre adresse mail ':'Adresse mail'}
           required
-          pattern="[a-z0-9._%+\-]+@[a-z0-9.-]+\.[a-z]{2,}$"
-          value={fields.email}
+          pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}"
+          value={fields.username}
           onChange={(e) => {
             e.target.reportValidity();
-            setFields({ ...fields, email: e.target.value });
+            setFields({ ...fields, username: e.target.value });
           }}
         />
         <Form.Control.Feedback type="invalid">
@@ -70,10 +79,13 @@ export default function ClubRegistrationForm({ fields, setFields, registerAdultL
       </Form.Group>
 
       <Form.Group className="mb-3">
-        <Form.Label>Numéro de téléphone</Form.Label>
-        <Form.Control type="tel" placeholder="Numéro de téléphone" required pattern="0[1-9][0-9]{8}"
-          value={fields.phoneNumber}
-          onChange={e => setFields({ ...fields, phoneNumber: e.target.value })} />
+              <Form.Label>{formType === 'child' ? 'Votre numéro de téléphone' : 'Numéro de téléphone'}</Form.Label>
+              <Form.Control
+                type="tel"
+                placeholder={formType === 'child' ? 'Votre numéro de téléphone' : 'Numéro de téléphone'}
+                required pattern="0[1-9][0-9]{8}"
+                value={fields.phoneNumber}
+                onChange={e => setFields({ ...fields, phoneNumber: e.target.value })} />
       </Form.Group>
 
       <Form.Group className="mb-3">
@@ -91,7 +103,7 @@ export default function ClubRegistrationForm({ fields, setFields, registerAdultL
       </Form.Group>
 
       <Form.Group className="mb-3">
-        <Form.Label>Numéro de voie</Form.Label>
+        <Form.Label>Numéro et libellé de voie</Form.Label>
         <Form.Control type="text" placeholder="Numéro et libellé de voie" required value={fields.address}
           onChange={e => setFields({ ...fields, address: e.target.value })} />
       </Form.Group>
@@ -115,21 +127,20 @@ export default function ClubRegistrationForm({ fields, setFields, registerAdultL
         </Form.Select>
       </Form.Group>
 
-      <Form.Group className="mb-3">
-        <Form.Label>Date d'inscription</Form.Label>
-        <Form.Control type="date" placeholder="Date d'inscription" required value={fields.registrationDate}
-          onChange={e => setFields({ ...fields, registrationDate: e.target.value })} />
-      </Form.Group>
+
 
       <Form.Group className="mb-3">
         <Form.Label>Licences</Form.Label>
-        <Form.Control type="text" placeholder="Licences" value={fields.licenses}
-          onChange={e => setFields({ ...fields, licenses: e.target.value.split(',') })} />
-      </Form.Group>
-
-      <Form.Group className="mb-3">
-        <Form.Check type="checkbox" label="Est un enfant" checked={fields.isChild}
-          onChange={e => setFields({ ...fields, isChild: e.target.checked })} />
+        {licenseTypes && licenseTypes.map((licenseType, index) => (
+          <Form.Check
+            key={index}
+            type="checkbox"
+            label={`${licenseType.name} - ${licenseType.price}€ - ${licenseType.description}`}
+            value={licenseType.id}
+            checked={fields.licenses.includes(licenseType.id)}
+            onChange={e => handleLicenseChange(e, licenseType.id)}
+          />
+        ))}
       </Form.Group>
 
       <Button variant="primary" type="submit">
@@ -138,3 +149,5 @@ export default function ClubRegistrationForm({ fields, setFields, registerAdultL
     </Form>
   );
 }
+
+

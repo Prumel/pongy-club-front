@@ -7,7 +7,7 @@ const backUrl = "http://localhost:8080/api/public/welcome";
 
 useEffect(() => {
         fetchTrainings();
-    }, [])
+        }, [])
 
 const [trainings, setTrainings] = useState([]);
 

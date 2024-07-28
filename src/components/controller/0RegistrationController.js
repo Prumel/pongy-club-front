@@ -68,6 +68,18 @@ export default function RegistrationController(props) {
             })
     }
 
+        function fetchLicenseTypes() {
+            axios.get("http://localhost:8080/api/public/register/license-type")
+                .then(response => {
+                    if (response.data) {
+                        setLicenseTypes(response.data);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching license types:', error);
+                });
+        }
+
     return (
         <RegistrationView
             handlePostalCodeChange={handlePostalCodeChange}
@@ -81,4 +93,3 @@ export default function RegistrationController(props) {
         />
     );
 }
-

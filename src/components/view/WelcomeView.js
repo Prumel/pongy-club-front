@@ -59,7 +59,7 @@ export default function WelcomeView(props) {
                 <h3>Nous rejoindre</h3>
                 <p>
                     Vous souhaitez nous rejoindre et participer aux entraînements ? C'est très simple ! Créez un compte pour vous inscrire ou venez nous
-                     rencontrer directement au gymnase aux hroaires des entraînements !
+                     rencontrer directement au gymnase aux horaires des entraînements !
                 </p>
              </section>
 
