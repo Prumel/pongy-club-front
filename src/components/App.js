@@ -5,15 +5,25 @@ import { myContext } from '../index';
 
 import WelcomeController from './controller/WelcomeController';
 import RegistrationController from './controller/RegistrationController';
+import ConnectionController from './controller/ConnectionController';
+import AdminController from './controller/AdminController';
 
 export default function App() {
 
- const [member, setMember] = useState(null);
+ const [isAdmin, setIsAdmin] = useState(false);
+ const [licensedMember, setLicensedMember] = useState(null);
 
+
+    const contextValue = {
+        isAdmin,
+        setIsAdmin,
+        licensedMember,
+        setLicensedMember
+    };
 
   return (
 
-    <myContext.Provider value={[member, setMember]}>
+    <myContext.Provider value={contextValue}>
        <header className='my-3 d-flex justify-content-center align-items-center'>
          <h1>Pongy Club<i className='ms-3 me-3 fas fa-table-tennis'></i></h1>
        </header>
@@ -36,18 +46,26 @@ export default function App() {
                             <Nav.Link as={Link} eventKey='1' to="/welcome">
                                 <i className='fa fa-home me-1'></i>Accueil
                             </Nav.Link>
-                            <Nav.Link as={Link} eventKey='2' to="/registration">
+                            <Nav.Link as={Link} eventKey='2' to="/registration" hidden={licensedMember !== null}>
                                 <i className='fa-solid fa-pen-to-square me-1'></i>
                                  S'inscrire au club
                             </Nav.Link>
 
-                            <Nav.Link as={Link} eventKey='4' to="/welcome" hidden={member === null} onClick={() => {setMember(null);}}>
+                            <Nav.Link as={Link} eventKey='3' to="/connection"  hidden={licensedMember !== null}>
+                                <i className='fa fa-key me-2'></i>
+                                Connexion
+                            </Nav.Link>
+
+                            <Nav.Link as={Link} eventKey='4' to="/welcome" hidden={licensedMember === null} onClick={() => {setIsConnected(false);}}>
                                 <i className='fa fa-unlock me-1'></i>
                                 Déconnexion
                             </Nav.Link>
-                            <Nav.Link as={Link} eventKey='5' to="/admin">
+
+                            <Nav.Link as={Link} eventKey='5' to="/admin" hidden={!isAdmin}>
                                 Admin
                             </Nav.Link>
+
+
                         </Nav>
                     </Navbar.Collapse>
                 </Container>
@@ -58,6 +76,8 @@ export default function App() {
                         <Route path='/' element={<WelcomeController />} />
                         <Route path='/welcome' element={<WelcomeController />} />
                         <Route path='/registration' element={<RegistrationController />} />
+                        <Route path='/connection' element={<ConnectionController />} />
+                        <Route path='/admin' element={<AdminController />} />
                     </Routes>
                 </Container>
             </article>
