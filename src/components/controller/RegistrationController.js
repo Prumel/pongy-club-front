@@ -48,7 +48,7 @@ export default function RegistrationController(props) {
             });
     }
 
-    function registerAdultLicensedMember(guardianName, firstName, lastName, username, password, phoneNumber, birthdate, address, selectedCity, zipCode, isChild, registrationDate, selectedLicenses) {
+    function registerAdultLicensedMember(guardianName, firstName, lastName, username, password, phoneNumber, birthdate, address, selectedCity, zipCode, isChild, registrationDate, licenceTypeIds) {
         const licensedMember = {
             guardianName: guardianName,
             firstName: firstName,
@@ -62,7 +62,7 @@ export default function RegistrationController(props) {
             zipCode: zipCode,
             isChild: isChild,
             registrationDate: new Date().toISOString(),
-            licenses: selectedLicenses
+            licenseTypeIds : licenceTypeIds
         };
         const requestOptions = {
             method: "POST",
@@ -109,9 +109,8 @@ export default function RegistrationController(props) {
             registerAdultLicensedMember={registerAdultLicensedMember}
             registrationSuccess={registrationSuccess}
             usernameTaken={usernameTaken}
-            fetchLicenseTypes={fetchLicenseTypes}
+            fetchLicenseTypes={() => fetchLicenseTypes()}
             licenseTypes={licenseTypes}
-            setLicenseTypes={setLicenseTypes}
         />
     );
 }
