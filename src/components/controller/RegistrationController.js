@@ -1,7 +1,6 @@
 import RegistrationView from "../view/RegistrationView";
 import React, { useState, useEffect } from "react";
 
-
 export default function RegistrationController(props) {
     const [cities, setCities] = useState([]);
     const [selectedCity, setSelectedCity] = useState('');
@@ -9,6 +8,7 @@ export default function RegistrationController(props) {
     const [isMinor, setIsMinor] = useState(false);
     const [registrationSuccess, setRegistrationSuccess] = useState(false);
     const [licenseTypes, setLicenseTypes] = useState([]);
+    const [usernameTaken, setUsernameTaken] = useState(false);
 
     useEffect(() => {
         fetchLicenseTypes();
@@ -23,32 +23,20 @@ export default function RegistrationController(props) {
         setIsMinor(age < 18);
     }
 
-  function fetchCities(postalCode) {
-    return fetch(`https://api-adresse.data.gouv.fr/search/?q=${postalCode}&limit=5`)
-        .then(response => response.json())
-        .then(data => {
-            if (data && data.features) {
-                return data.features.map(feature => feature.properties.city);
-            }
-            return [];
-        })
-        .catch(error => {
-            console.error(error);
-            return [];
-        });
-}
-//        return axios.get(`https://api-adresse.data.gouv.fr/search/?q=${postalCode}&limit=5`)
-//            .then(response => {
-//                if (response.data && response.data.features) {
-//                    return response.data.features.map(feature => feature.properties.city);
-//                }
-//                return [];
-//            })
-//            .catch(error => {
-//                console.error(error);
-//                return [];
-//            });
-//    }
+    function fetchCities(postalCode) {
+        return fetch(`https://api-adresse.data.gouv.fr/search/?q=${postalCode}&limit=5`)
+            .then(response => response.json())
+            .then(data => {
+                if (data && data.features) {
+                    return data.features.map(feature => feature.properties.city);
+                }
+                return [];
+            })
+            .catch(error => {
+                console.error(error);
+                return [];
+            });
+    }
 
     function handlePostalCodeChange(e) {
         fetchCities(e.target.value)
@@ -60,7 +48,7 @@ export default function RegistrationController(props) {
             });
     }
 
-    function registerAdultLicensedMember(guardianName, firstName, lastName, username, password, phoneNumber, birthdate, address, selectedCity, zipCode, isChild, registrationDate, licenses) {
+    function registerAdultLicensedMember(guardianName, firstName, lastName, username, password, phoneNumber, birthdate, address, selectedCity, zipCode, isChild, registrationDate, selectedLicenses) {
         const licensedMember = {
             guardianName: guardianName,
             firstName: firstName,
@@ -74,7 +62,7 @@ export default function RegistrationController(props) {
             zipCode: zipCode,
             isChild: isChild,
             registrationDate: new Date().toISOString(),
-            licenses: licenses
+            licenses: selectedLicenses
         };
         const requestOptions = {
             method: "POST",
@@ -85,26 +73,31 @@ export default function RegistrationController(props) {
             .then(response => {
                 if (response.ok) {
                     setRegistrationSuccess(true);
-                    return response.json();
+                    setUsernameTaken(false)
                 } else {
-                    throw new Error('Failed to register');
+                     return response.text().then(errorText => {
+                        if (errorText === 'Username is taken') {
+                            console.log('Username is taken');
+                            setUsernameTaken(true);
+                        }
+                    });
                 }
-
+                return response.json();
             })
-            .catch(error => {
-                console.error('Error:', error);
-            });
+
     }
-       function fetchLicenseTypes() {
-            const requestOptions = {
-                method: 'GET',
-                headers: { 'Content-Type': 'application/json' },
-            };
-            fetch(`${backUrl}/license-type`, requestOptions)
-                .then(response => response.json())
-                .then(json => setLicenseTypes(json));
-                {console.log(licenseTypes)}
-       }
+
+
+    function fetchLicenseTypes() {
+        const requestOptions = {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' },
+        };
+        fetch(`${backUrl}/license-type`, requestOptions)
+            .then(response => response.json())
+            .then(json => setLicenseTypes(json));
+    }
+
     return (
         <RegistrationView
             handlePostalCodeChange={handlePostalCodeChange}
@@ -115,7 +108,10 @@ export default function RegistrationController(props) {
             isMinor={isMinor}
             registerAdultLicensedMember={registerAdultLicensedMember}
             registrationSuccess={registrationSuccess}
-             fetchLicenseTypes={() => fetchLicenseTypes()} licenseTypes={licenseTypes}
+            usernameTaken={usernameTaken}
+            fetchLicenseTypes={fetchLicenseTypes}
+            licenseTypes={licenseTypes}
+            setLicenseTypes={setLicenseTypes}
         />
     );
 }
