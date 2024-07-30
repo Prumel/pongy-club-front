@@ -52,6 +52,7 @@ export default function RegistrationFormView({ fields, setFields, registerAdultL
                     placeholder={formType === 'child' ? 'Nom de votre enfant' : 'Nom'}
                     value={fields.lastName}
                     onChange={form => setFields({ ...fields, lastName: form.target.value })}
+                    required
                 />
             </Form.Group>
 
@@ -60,7 +61,9 @@ export default function RegistrationFormView({ fields, setFields, registerAdultL
                 <Form.Control type="text"
                 placeholder={formType === 'child' ? 'Prénom de votre enfant' : 'Prénom'}
                 value={fields.firstName}
-                onChange={form => setFields({ ...fields, firstName: form.target.value })} />
+                onChange={form => setFields({ ...fields, firstName: form.target.value })}
+                required
+            />
             </Form.Group>
 
             {fields.isChild && (
@@ -71,6 +74,7 @@ export default function RegistrationFormView({ fields, setFields, registerAdultL
                         placeholder="Votre nom et prénom"
                         value={fields.guardianName}
                         onChange={form => setFields({ ...fields, guardianName: form.target.value })}
+                        required
                     />
                 </Form.Group>
             )}
@@ -82,6 +86,7 @@ export default function RegistrationFormView({ fields, setFields, registerAdultL
                     placeholder="Mot de passe"
                     value={fields.password}
                     onChange={form => setFields({ ...fields, password: form.target.value })}
+                    required
                 />
             </Form.Group>
 
@@ -96,6 +101,7 @@ export default function RegistrationFormView({ fields, setFields, registerAdultL
                         e.target.reportValidity();
                         setFields({ ...fields, username: e.target.value });
                     }}
+                    required
                     />
                 <Form.Control.Feedback type="invalid">
                     Veuillez entrer une adresse mail valide.
@@ -110,20 +116,21 @@ export default function RegistrationFormView({ fields, setFields, registerAdultL
                     pattern="0[1-9][0-9]{8}"
                     value={fields.phoneNumber}
                     onChange={e => setFields({ ...fields, phoneNumber: e.target.value })}
+                    required
                 />
             </Form.Group>
 
             <Form.Group className="mb-3">
-                <Form.Label>Date de naissance</Form.Label>
+                <Form.Label>{formType === 'child' ? 'Date de naissance de votre enfant' : 'Date de naissance'}</Form.Label>
                 <Form.Control
                     type="date"
-                    placeholder={formType === 'child' ? 'Date de naissance de votre enfant' : 'Date de naissance'}
                     value={fields.birthdate}
                     onChange={(e) => {
                         handleDateChange(e);
                         setFields({ ...fields, birthdate: e.target.value });
                     }}
-                    />
+                    required
+                />
             </Form.Group>
 
             <Form.Group className="mb-3">
@@ -133,6 +140,7 @@ export default function RegistrationFormView({ fields, setFields, registerAdultL
                     placeholder="Numéro et libellé de voie"
                     value={fields.address}
                     onChange={e => setFields({ ...fields, address: e.target.value })}
+                    required
                 />
             </Form.Group>
 
@@ -147,6 +155,7 @@ export default function RegistrationFormView({ fields, setFields, registerAdultL
                     handlePostalCodeChange(e);
                     setFields({ ...fields, zipCode: e.target.value });
                     }}
+                    required
                 />
             </Form.Group>
 
@@ -172,6 +181,7 @@ export default function RegistrationFormView({ fields, setFields, registerAdultL
                         value={licenseType.id}
                         checked={fields.licenseTypeIds.includes(licenseType.id)}
                         onChange={handleCheckboxChange}
+                        required
                     />
                 ))}
             </Form.Group>

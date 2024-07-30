@@ -3,13 +3,13 @@ import WelcomeView from "../view/WelcomeView";
 
 export default function WelcomeController(props) {
 
-const backUrl = "http://localhost:8080/api/public/welcome";
+    const backUrl = "http://localhost:8080/api/public/welcome";
 
-useEffect(() => {
+    const [trainings, setTrainings] = useState([]);
+
+    useEffect(() => {
         fetchTrainings();
-        }, [])
-
-const [trainings, setTrainings] = useState([]);
+    }, [])
 
     function fetchTrainings() {
         const requestOptions = {
@@ -18,8 +18,8 @@ const [trainings, setTrainings] = useState([]);
         };
 
         fetch(`${backUrl}/training`, requestOptions)
-        .then(response => response.json())
-        .then(json => setTrainings(json));
+            .then(response => response.json())
+            .then(json => setTrainings(json));
     }
 
     return (

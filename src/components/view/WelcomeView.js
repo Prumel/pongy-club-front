@@ -58,8 +58,10 @@ export default function WelcomeView(props) {
              <section className="p-3">
                 <h3>Nous rejoindre</h3>
                 <p>
-                    Vous souhaitez nous rejoindre et participer aux entraînements ? C'est très simple ! Créez un compte pour vous inscrire ou venez nous
-                     rencontrer directement au gymnase aux horaires des entraînements !
+                    Vous souhaitez nous rejoindre et participer aux entraînements ? C'est très simple !
+                    Créez un compte pour vous <Link to="/registration">inscrire</Link> ou venez nous rencontrer
+                    directement au gymnase aux horaires des entraînements !
+
                 </p>
              </section>
 
@@ -68,9 +70,10 @@ export default function WelcomeView(props) {
             <section className="p-3">
                 <h3>Découvrez nos partenaires</h3>
                 <p>
-                    Le <strong>Pongy Club</strong> remercie infiniement ses partenaires, <a href="https://www.ecoleql.fr/">l'EQL
-                    </a> et <a href="https://www.iledefrance.fr/" target="_blank">la région Ile-de-France</a>, qui le soutiennent financièrement
-                     afin de pouvoir mettre en place de beaux projets tout au long de l'année comme :
+                    Le <strong>Pongy Club</strong> remercie infiniement ses partenaires,
+                    <a href="https://www.ecoleql.fr/">l'EQL </a> et <a href="https://www.iledefrance.fr/" target="_blank">
+                    la région Ile-de-France</a>, qui le soutiennent financièrement afin de pouvoir mettre en place de
+                    beaux projets tout au long de l'année comme :
                 </p>
                 <ul>
                     <li>l'organisation de tournois,</li>
@@ -84,10 +87,14 @@ export default function WelcomeView(props) {
                 </p>
                 <div className="row">
                     <div className="col-md d-flex align-items-center justify-content-center">
-                        <a href="https://www.ecoleql.fr/" target="_blank"><img src={logoEql} alt="Logo de l'Ecole Qualité Logicielle (EQL), organisme de formation"/></a>
+                        <a href="https://www.ecoleql.fr/" target="_blank">
+                            <img src={logoEql} alt="Logo de l'Ecole Qualité Logicielle (EQL), organisme de formation"/>
+                        </a>
                     </div>
                     <div className="col-md d-flex align-items-center justify-content-center">
-                        <a href="https://www.iledefrance.fr/" target="_blank"><img src={logoIDF} alt="Logo de la région Ile-de-France"/></a>
+                        <a href="https://www.iledefrance.fr/" target="_blank">
+                            <img src={logoIDF} alt="Logo de la région Ile-de-France"/>
+                        </a>
                     </div>
                 </div>
             </section>

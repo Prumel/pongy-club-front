@@ -42,7 +42,7 @@ export default function RegistrationView(props) {
             {props.registrationSuccess ? (
                 <Alert variant="success">
                     Vos informations ont bien été envoyées. Afin de finaliser votre inscription, veuillez vous rendre
-                    au gymnase aux horaires des entraînements le réglement (espèces ou chèque).
+                    au gymnase aux horaires des entraînements le règlement (espèces ou chèque).
                 </Alert>
             ) : (
                 <>
@@ -66,10 +66,10 @@ export default function RegistrationView(props) {
                 </Alert>
             )}
              {props.usernameTaken && (
-                            <Alert variant="warning">
-                                Le nom d'utilisateur est déjà pris. Veuillez en choisir un autre.
-                            </Alert>
-                        )}
+                <Alert variant="warning">
+                    Il existe déjà un compte avec cet adresse email.
+                </Alert>
+             )}
             {renderForm()}
         </Container>
     );

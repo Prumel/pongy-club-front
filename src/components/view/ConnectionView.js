@@ -59,6 +59,7 @@ export default function ConnectionView(props) {
                    <Col sm={{ offset: 1, span: 10 }} lg={{ offset: 4, span: 4 }} className="p-1 d-flex justify-content-center">
                         <Nav.Link
                             className="btn bg-black w-100 text-white"
+                            as={Link} to="/welcome"
                             onClick={() => props.fetchLicensedMember(fields.login, fields.password)}
                         >
                             Connexion

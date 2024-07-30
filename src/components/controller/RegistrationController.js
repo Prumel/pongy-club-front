@@ -2,6 +2,7 @@ import RegistrationView from "../view/RegistrationView";
 import React, { useState, useEffect } from "react";
 
 export default function RegistrationController(props) {
+
     const [cities, setCities] = useState([]);
     const [selectedCity, setSelectedCity] = useState('');
     const [birthDate, setBirthDate] = useState(null);
@@ -10,11 +11,12 @@ export default function RegistrationController(props) {
     const [licenseTypes, setLicenseTypes] = useState([]);
     const [usernameTaken, setUsernameTaken] = useState(false);
 
+    const backUrl = "http://localhost:8080/api/public/register";
     useEffect(() => {
         fetchLicenseTypes();
     }, []);
 
-    const backUrl = "http://localhost:8080/api/public/register";
+
 
     function handleDateChange(e) {
         const birthDate = new Date(e.target.value);
@@ -48,7 +50,9 @@ export default function RegistrationController(props) {
             });
     }
 
-    function registerAdultLicensedMember(guardianName, firstName, lastName, username, password, phoneNumber, birthdate, address, selectedCity, zipCode, isChild, registrationDate, licenceTypeIds) {
+    function registerAdultLicensedMember(guardianName, firstName, lastName, username, password, phoneNumber, birthdate,
+        address, selectedCity, zipCode, isChild, registrationDate, licenceTypeIds) {
+
         const licensedMember = {
             guardianName: guardianName,
             firstName: firstName,
@@ -77,7 +81,6 @@ export default function RegistrationController(props) {
                 } else {
                      return response.text().then(errorText => {
                         if (errorText === 'Username is taken') {
-                            console.log('Username is taken');
                             setUsernameTaken(true);
                         }
                     });
