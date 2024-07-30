@@ -75,4 +75,12 @@ export default function RegistrationView(props) {
     );
 }
 
+/****** The form is supposed to be hidden during the months of July and August. ******
+   const isBetweenJulyAndAugust = currentMonth >= 6 && currentMonth <= 7;
 
+   if (isBetweenJulyAndAugust) {
+        return <Alert variant="warning">
+            Les inscriptions sont fermées du mois de juillet au mois d'août. Revenez en septembre !
+        </Alert>;
+   }
+*/
