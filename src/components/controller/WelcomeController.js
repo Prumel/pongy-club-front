@@ -3,7 +3,7 @@ import WelcomeView from "../view/WelcomeView";
 
 export default function WelcomeController(props) {
 
-    const backUrl = "http://34.155.236.167:8080/api/public/welcome";
+    const backUrl = "http://34.163.97.128:8080/api/public/welcome";
 
     const [trainings, setTrainings] = useState([]);
 

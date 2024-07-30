@@ -3,7 +3,7 @@ import { myContext } from "../..";
 import ConnectionView from "../view/ConnectionView";
 
 export default function ConnectionController() {
-    const backUrl = "http://34.155.236.167:8080/api/auth/login";
+    const backUrl = "http://34.163.97.128:8080/api/auth/login";
     const { isAdmin, setIsAdmin, licensedMember, setLicensedMember } = useContext(myContext);
 
     const [isIncorrect, setIsIncorrect] = useState(false);

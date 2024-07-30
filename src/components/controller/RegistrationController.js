@@ -11,7 +11,7 @@ export default function RegistrationController(props) {
     const [licenseTypes, setLicenseTypes] = useState([]);
     const [usernameTaken, setUsernameTaken] = useState(false);
 
-    const backUrl = "http://34.155.236.167:8080/api/public/register";
+    const backUrl = "http://34.163.97.128:8080/api/public/register";
     useEffect(() => {
         fetchLicenseTypes();
     }, []);
