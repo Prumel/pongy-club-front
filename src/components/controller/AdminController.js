@@ -3,7 +3,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { myContext } from "../..";
 
 export default function AdminController(props) {
-    const backUrl = "http://localhost:8080/api/public/admin/licensedmembers"
+    const backUrl = "http://34.155.236.167:8080/api/public/admin/licensedmembers"
 
     const { licensedMember } = useContext(myContext);
     const [licensedMembers, setLicensedMembers] = useState([]);
