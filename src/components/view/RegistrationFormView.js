@@ -3,6 +3,8 @@ import { Button, Form } from 'react-bootstrap';
 
 export default function RegistrationFormView({ fields, setFields, registerAdultLicensedMember, handleDateChange, handlePostalCodeChange, cities, licenseTypes }) {
     const formType = fields.isChild ? 'child' : 'adult';
+    const [validationError, setValidationError] = useState('');
+
 
     useEffect(() => {
         if (cities.length > 0 && !fields.selectedCity) {
@@ -25,9 +27,23 @@ export default function RegistrationFormView({ fields, setFields, registerAdultL
         });
     };
 
-    return (
-        <Form onSubmit={(e) => {
-            e.preventDefault();
+    const validateForm = () => {
+        const licenseTypeIdsLength = fields.licenseTypeIds.length;
+        if (licenseTypeIdsLength === 0) {
+            setValidationError('Vous devez sélectionner au moins une licence.');
+            return false;
+        } else if (licenseTypeIdsLength === licenseTypes.length) {
+            setValidationError('Vous ne pouvez pas sélectionner toutes les licences.');
+            return false;
+        }
+        setValidationError('');
+        return true;
+    };
+
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if (validateForm()) {
             registerAdultLicensedMember(
                 fields.isChild ? fields.guardianName : null,
                 fields.firstName,
@@ -43,7 +59,13 @@ export default function RegistrationFormView({ fields, setFields, registerAdultL
                 new Date().toISOString(),
                 fields.licenseTypeIds
             );
-        }}>
+        }
+    };
+
+
+    return (
+        <Form onSubmit={handleSubmit}>
+                    {validationError && <Alert variant="danger">{validationError}</Alert>}
 
             <Form.Group className="mb-3">
                 <Form.Label>{formType === 'child' ? 'Nom de votre enfant' : 'Nom'}</Form.Label>
@@ -181,7 +203,6 @@ export default function RegistrationFormView({ fields, setFields, registerAdultL
                         value={licenseType.id}
                         checked={fields.licenseTypeIds.includes(licenseType.id)}
                         onChange={handleCheckboxChange}
-                        required
                     />
                 ))}
             </Form.Group>

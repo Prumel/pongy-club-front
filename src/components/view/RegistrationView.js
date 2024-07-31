@@ -62,7 +62,7 @@ export default function RegistrationView(props) {
             )}
             {props.isMinor && (
                 <Alert variant="warning">
-                    Si vous êtes mineur, veuillez remplir l'autre formulaire avec votre responsable légal.
+                    Si vous êtes mineur, veuillez remplir le formulaire adéquat avec votre responsable légal.
                 </Alert>
             )}
              {props.usernameTaken && (
